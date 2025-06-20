@@ -1,10 +1,10 @@
 package com.example.backend_loja_springboot.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.example.backend_loja_springboot.exceptions.ResourceNotFoundException;
 import com.example.backend_loja_springboot.model.Produto;
 import com.example.backend_loja_springboot.repository.ProdutoRepository;
 
@@ -21,13 +21,8 @@ public class ProdutoService {
 		return produtoRepository.findAll();
 	}
 	
-	public Optional<Produto> findById(Long id){
-		Optional<Produto> obj = produtoRepository.findById(id);
-		
-		if(obj.isEmpty()) {
-			System.out.println("Produto não existente!");
-		}
-		return obj;
+	public Produto findById(Long id){
+		return produtoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Produto com id " + id + " não encontrado!"));
 	}
 	
 	public Produto insertProduto(Produto produto) {
@@ -35,6 +30,10 @@ public class ProdutoService {
 	}
 	
 	public void deleteProduto(Long id) {
+		
+		if(!produtoRepository.existsById(id)) {
+			throw new ResourceNotFoundException("Produto não encontrado!");
+		}
 		produtoRepository.deleteById(id);
 	}
 }

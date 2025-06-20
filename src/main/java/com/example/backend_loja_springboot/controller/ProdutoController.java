@@ -31,8 +31,9 @@ public class ProdutoController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Produto> findById(@PathVariable Long id){
-		return produtoService.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+	public ResponseEntity<?> findById(@PathVariable Long id){
+			Produto produto = produtoService.findById(id);
+			return ResponseEntity.ok().body(produto);
 	}
 	
 	@PostMapping
