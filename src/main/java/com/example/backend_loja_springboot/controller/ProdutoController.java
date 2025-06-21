@@ -15,7 +15,7 @@ import com.example.backend_loja_springboot.model.Produto;
 import com.example.backend_loja_springboot.services.ProdutoService;
 
 @RestController
-@RequestMapping(value="/api/produtos")
+@RequestMapping(value="/api/products")
 public class ProdutoController {
 
 	private final ProdutoService produtoService;
@@ -37,14 +37,14 @@ public class ProdutoController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Produto> insertProduto(@RequestBody Produto produto){
-		Produto obj = produtoService.insertProduto(produto);
+	public ResponseEntity<Produto> insertProduto(@RequestBody Produto product){
+		Produto obj = produtoService.insertProduct(product);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteProduto(@PathVariable Long id){
-		produtoService.deleteProduto(id);
+		produtoService.deleteProduct(id);
 		return ResponseEntity.noContent().build();
 	}
 	

@@ -22,17 +22,17 @@ public class ProdutoService {
 	}
 	
 	public Produto findById(Long id){
-		return produtoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Produto com id " + id + " não encontrado!"));
+		return produtoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product with id " + id + " not found!"));
 	}
 	
-	public Produto insertProduto(Produto produto) {
+	public Produto insertProduct(Produto produto) {
 		return produtoRepository.save(produto);
 	}
 	
-	public void deleteProduto(Long id) {
+	public void deleteProduct(Long id) {
 		
 		if(!produtoRepository.existsById(id)) {
-			throw new ResourceNotFoundException("Produto não encontrado!");
+			throw new ResourceNotFoundException("Product not found!");
 		}
 		produtoRepository.deleteById(id);
 	}
