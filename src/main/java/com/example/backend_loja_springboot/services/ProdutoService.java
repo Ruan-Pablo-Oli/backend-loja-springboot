@@ -1,6 +1,7 @@
 package com.example.backend_loja_springboot.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -35,5 +36,9 @@ public class ProdutoService {
 			throw new ResourceNotFoundException("Product not found!");
 		}
 		produtoRepository.deleteById(id);
+	}
+	
+	public List<Produto> findByNome(String nome){
+		return produtoRepository.findByNomeContainingIgnoreCase(nome);
 	}
 }
