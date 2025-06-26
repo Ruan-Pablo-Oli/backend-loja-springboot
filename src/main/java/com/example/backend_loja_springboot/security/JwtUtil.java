@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.crypto.SecretKey;
 
+import com.example.backend_loja_springboot.model.Usuario;
+
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -33,5 +35,8 @@ public class JwtUtil {
 			return false;
 		}
 	}
+	
+	
+	
 	
 }

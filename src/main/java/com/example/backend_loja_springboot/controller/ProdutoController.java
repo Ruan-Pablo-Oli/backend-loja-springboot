@@ -1,7 +1,6 @@
 package com.example.backend_loja_springboot.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -58,8 +57,6 @@ public class ProdutoController {
 		List<Produto> list = produtoService.findByNome(text);
 		return ResponseEntity.ok().body(list);
 	}
-	
-	
 	
 	
 }

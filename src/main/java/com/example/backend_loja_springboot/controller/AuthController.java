@@ -1,7 +1,6 @@
 package com.example.backend_loja_springboot.controller;
 
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend_loja_springboot.controller.dto.AuthAccRequest;
 import com.example.backend_loja_springboot.model.Usuario;
-import com.example.backend_loja_springboot.security.JwtUtil;
+import com.example.backend_loja_springboot.services.AuthService;
 import com.example.backend_loja_springboot.services.UsuarioService;
 
 @RestController
@@ -19,9 +18,10 @@ import com.example.backend_loja_springboot.services.UsuarioService;
 public class AuthController {
 
 	private final UsuarioService usuarioService;
-	
-	public AuthController(UsuarioService usuarioService) {
+	private final AuthService authService;
+	public AuthController(UsuarioService usuarioService,AuthService authService) {
 		this.usuarioService = usuarioService;
+		this.authService = authService;
 	}
 	
 	@PostMapping(value="/register")
@@ -32,13 +32,8 @@ public class AuthController {
 	
 	@PostMapping(value="/login")
 	public ResponseEntity<?> login(@RequestBody AuthAccRequest request){
-		Optional<Usuario> usuario = usuarioService.findUsuarioByusername(request.username());
-		
-		if(usuario.isPresent() && usuario.get().getPassword().equals(request.password())) {
-			String token = JwtUtil.generateToken(usuario.get().getusername());
-			return ResponseEntity.ok(Map.of("token",token));
-		}
-		return ResponseEntity.status(401).body("Credencias Inválidas");
+		String text = authService.auth(request.username(), request.password());
+		return ResponseEntity.ok().body(Map.of("token",text));
 	}
 	
 	
